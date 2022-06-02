@@ -22,7 +22,7 @@ public class GridModel
     public void clickOnLight (int x, int y)
     {
         invert(x,y);
-        
+
         //if (!this.editorMode)
         invert(x - 1, y);
         invert(x + 1, y);
