@@ -23,11 +23,13 @@ public class GridModel
     {
         invert(x,y);
 
-        //if (!this.editorMode)
-        invert(x - 1, y);
-        invert(x + 1, y);
-        invert(x, y - 1);
-        invert(x, y + 1);
+        if (!this.editorMode)
+        {
+            invert(x - 1, y);
+            invert(x + 1, y);
+            invert(x, y - 1);
+            invert(x, y + 1);
+        }
     }
 
     public void invert (int x, int y)
@@ -45,14 +47,4 @@ public class GridModel
     public boolean getLight(int x, int y) {
         return this.lights[x][y];
     }
-    /*
-
-        Le modele dans mon cas est un cercle
-        il ne contient que des valeurs brutes
-        ne representant rien de graphique
-        aucun import de javafx
-        il ne connait personne pour ce qui est controller
-        ou vue
-
-     */
 }
