@@ -7,8 +7,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
-
 public class GridView extends GridPane
 {
     public static final int TAILLE_CASE = 75;
@@ -77,7 +75,7 @@ public class GridView extends GridPane
         for (int i = 0 ; i < GridModel.LENGTH_X ; i ++)
             for (int j = 0; j < GridModel.LENGTH_Y ; j ++)
             {
-                int tmp1 = i * GridModel.LENGTH_X + j;
+                //int tmp1 = i * GridModel.LENGTH_X + j;
                 //this.updateRectFill(this.rectList.get(i * GridModel.LENGTH_X + j), this.model.getLight(i, j));
                 //this.makeRect(i,j);
                 this.updateRectFill(this.rectList[i][j], this.model.getLight(i, j));
