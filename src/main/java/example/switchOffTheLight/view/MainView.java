@@ -1,21 +1,21 @@
-package example.switchOffTheLight.vue;
+package example.switchOffTheLight.view;
 
-import example.switchOffTheLight.modele.GridModel;
+import example.switchOffTheLight.model.GameModel;
 import javafx.scene.layout.BorderPane;
 
 public class MainView extends BorderPane
 {
     //Attributes
-    GridModel model;
+    GameModel model;
     GridView gridView;
     MenuView menuView;
 
     //Constructor
-    public MainView (GridModel m)
+    public MainView (GameModel m)
     {
         this.model = m;
 
-        this.gridView = new GridView(m);
+        this.gridView = new GridView(m, this);
         this.setCenter(this.gridView);
 
         this.menuView = new MenuView(m);
@@ -23,6 +23,12 @@ public class MainView extends BorderPane
     }
 
     //Methods
+    public void update()
+    {
+        this.gridView.update();
+        this.menuView.update();
+    }
+
     public GridView getGridView() {
         return this.gridView;
     }

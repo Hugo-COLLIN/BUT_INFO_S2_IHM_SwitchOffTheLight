@@ -1,7 +1,7 @@
 package example.switchOffTheLight;
 
-import example.switchOffTheLight.modele.GridModel;
-import example.switchOffTheLight.vue.MainView;
+import example.switchOffTheLight.model.GameModel;
+import example.switchOffTheLight.view.MainView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -26,7 +26,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        GridModel model = new GridModel();
+        GameModel model = new GameModel();
         MainView vue = new MainView(model);
         Scene scene = new Scene(vue);
 

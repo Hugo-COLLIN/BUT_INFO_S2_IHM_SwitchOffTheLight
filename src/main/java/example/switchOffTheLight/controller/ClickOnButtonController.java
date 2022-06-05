@@ -1,11 +1,11 @@
 package example.switchOffTheLight.controller;
 
-import example.switchOffTheLight.modele.GridModel;
-import example.switchOffTheLight.vue.GridView;
+import example.switchOffTheLight.model.GameModel;
+import example.switchOffTheLight.view.MenuView;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 
-public class ClickOnButtonController implements EventHandler<MouseEvent> {
+public class ClickOnButtonController implements EventHandler<ActionEvent> {
 
     /*
         Le controller est celui qui modifie les valeurs dans le
@@ -18,33 +18,21 @@ public class ClickOnButtonController implements EventHandler<MouseEvent> {
      */
 
 
-    GridModel model;
-    GridView vue;
+    GameModel model;
+    MenuView view;
 
-    int btnX, btnY;
+    String action;
 
-    /*
-        Prend souvent en parametre modele et vue car pas
-        souvent cree en interne
-     */
-    public ClickOnButtonController(GridModel model, GridView vue, int x, int y) {
+
+    public ClickOnButtonController(GameModel model, MenuView view, String action) {
         this.model = model;
-        this.vue = vue;
-        this.btnX = x;
-        this.btnY = y;
+        this.view = view;
+        this.action = action;
     }
 
-    /*
-        Methode obligatoire a cause de l'implementation
-     */
     @Override
-    public void handle(MouseEvent mouseEvent) {
-        this.model.clickOnLight(this.btnX, this.btnY);
-        this.vue.update();
-        /*
-        model.deplacer(); // Deplace le cercle non graphique
-        model.agrandir(); // Agrandit le cercle
-        vue.update(); // Mets a jour la vue par consequent deplace et agrandit le cercle graphique
-                 */
+    public void handle(ActionEvent mouseEvent) {
+        this.model.buttonTriggered(this.action);
+        this.view.update();
     }
 }

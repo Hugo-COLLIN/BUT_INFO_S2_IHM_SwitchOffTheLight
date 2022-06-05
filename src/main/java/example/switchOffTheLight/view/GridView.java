@@ -1,7 +1,7 @@
-package example.switchOffTheLight.vue;
+package example.switchOffTheLight.view;
 
-import example.switchOffTheLight.controller.ClickOnButtonController;
-import example.switchOffTheLight.modele.GridModel;
+import example.switchOffTheLight.controller.ClickOnLightController;
+import example.switchOffTheLight.model.GameModel;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -11,15 +11,18 @@ public class GridView extends GridPane
 {
     public static final int TAILLE_CASE = 75;
 
-    GridModel model;
+    GameModel model;
+
+    MainView view;
 
     Rectangle[][] rectList;
 
-    public GridView(GridModel m)
+    public GridView(GameModel m, MainView v)
     {
         //int count = GridModel.LENGTH_X;
         this.model = m;
-        this.rectList = new Rectangle[GridModel.LENGTH_X][GridModel.LENGTH_Y];
+        this.view = v;
+        this.rectList = new Rectangle[GameModel.LENGTH_X][GameModel.LENGTH_Y];
 
         //for (int i = 0 ; i < count ; i ++)
         //    this.rectList.add(new ArrayList<>());
@@ -33,8 +36,8 @@ public class GridView extends GridPane
 
     public void makeGridLigths ()
     {
-        for (int i = 0; i < GridModel.LENGTH_X; i ++)
-            for (int j = 0; j < GridModel.LENGTH_Y; j ++)
+        for (int i = 0; i < GameModel.LENGTH_X; i ++)
+            for (int j = 0; j < GameModel.LENGTH_Y; j ++)
                 makeRect(i, j);
     }
 
@@ -50,7 +53,7 @@ public class GridView extends GridPane
         this.rectList[x][y] = rect;
 
         rect.setOnMouseClicked(
-                new ClickOnButtonController(this.model, this, x, y)
+                new ClickOnLightController(this.model, this, x, y)
                 //new ClickOnButtonController(this.model, this, (int)(rect.getX() / TAILLE_CASE), (int)(rect.getY() / TAILLE_CASE))
         );
 
@@ -72,8 +75,8 @@ public class GridView extends GridPane
 
     public void update ()
     {
-        for (int i = 0 ; i < GridModel.LENGTH_X ; i ++)
-            for (int j = 0; j < GridModel.LENGTH_Y ; j ++)
+        for (int i = 0; i < GameModel.LENGTH_X ; i ++)
+            for (int j = 0; j < GameModel.LENGTH_Y ; j ++)
             {
                 //int tmp1 = i * GridModel.LENGTH_X + j;
                 //this.updateRectFill(this.rectList.get(i * GridModel.LENGTH_X + j), this.model.getLight(i, j));
