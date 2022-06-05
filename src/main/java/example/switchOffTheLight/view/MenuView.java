@@ -10,16 +10,12 @@ import java.util.ArrayList;
 public class MenuView extends HBox
 {
     GameModel model;
-    String [] actionList;
-
-    public static boolean [] btnState = {false, true, true};
 
     ArrayList<Button> btnList;
 
     public MenuView (GameModel model)
     {
         this.model = model;
-        this.actionList = new String[]{GameModel.PLAY, "Configurer", "Arrêter", "Sortir"};
         this.btnList = new ArrayList<>();
         this.makeMenu();
     }
@@ -41,6 +37,9 @@ public class MenuView extends HBox
 
     public void update()
     {
+        for (int i = 0 ; i < this.btnList.size() ; i ++)
+            this.btnList.get(i).setDisable(!this.model.getBtnState(i));
+
         /*
         for (int i = 0 ; i < 3 ; i ++)
             if ()
@@ -52,7 +51,8 @@ public class MenuView extends HBox
             */
 
 
-        if (this.model.getEditorMode())
+        /*
+        if (this.model.getMode().equals(GameModel.EDIT))
         {
             btnList.get(0).setDisable(false);
             btnList.get(1).setDisable(true);
@@ -64,6 +64,7 @@ public class MenuView extends HBox
             btnList.get(1).setDisable(false);
             btnList.get(2).setDisable(false);
         }
+                */
 
     }
 }

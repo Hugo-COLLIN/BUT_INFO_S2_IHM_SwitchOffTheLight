@@ -1,20 +1,18 @@
 package example.switchOffTheLight.model;
 
-import java.util.HashMap;
-
 public class GameModel
 {
     private boolean [][] lights;
 
-    private int modeN; //0 : playMode, 1 : editorMode, 2 : endMode, 3 : exitMode
+    //private int modeN; //0 : playMode, 1 : editorMode, 2 : endMode, 3 : exitMode
 
-    HashMap<String, Boolean> btnsStatus;
+    //HashMap<String, Boolean> btnsStatus;
 
     private boolean
-            isWin,
+            isWin/*,
             editorMode,
             endGame,
-            systemExit;
+            systemExit*/;
 
     private String mode;
 
@@ -24,27 +22,39 @@ public class GameModel
 
     public static final String
             PLAY = "Jouer",
-            CONF = "Configurer",
+            EDIT = "Configurer",
             STOP = "Arrêter",
             EXIT = "Sortir";
 
-    public static final String [] ACTION_LIST = {PLAY, CONF, STOP, EXIT};
+    public static final String [] ACTION_LIST = {PLAY, EDIT, STOP, EXIT};
+    public boolean [] btnState;
+
+    /*
+    public static final boolean []
+            BTNS_STATE_PLAY = {false, true, true, true},
+            BTNS_STATE_EDIT = {true, true, false, true};
+
+     */
 
     public GameModel() {
         this.lights = new boolean[LENGTH_X][LENGTH_Y];
-        this.btnsStatus = new HashMap<>();
+        //this.btnsStatus = new HashMap<>();
 
+        this.mode = "Arrêter";
+        this.btnState = new boolean[]{true, true, false, true};
+
+        /*
         boolean tmp = false;
-
         for (String action : ACTION_LIST)
         {
             btnsStatus.put(action, tmp);
             tmp = true;
         }
-
         System.out.println(btnsStatus);
+         */
 
-        this.modeN = 2;
+
+        //this.modeN = 2;
         this.isWin = false;
 
         this.initialGrid();
@@ -52,21 +62,27 @@ public class GameModel
 
 
         //toDel
+        /*
         this.editorMode = true;
         this.endGame = false;
         this.systemExit = false;
+
+         */
     }
 
     public void clickOnLight (int x, int y)
     {
-        invert(x,y);
-
-        if (this.modeN == 0)
+        if (!this.mode.equals(STOP))
         {
-            invert(x - 1, y);
-            invert(x + 1, y);
-            invert(x, y - 1);
-            invert(x, y + 1);
+            invert(x,y);
+
+            if (this.mode.equals(PLAY))
+            {
+                invert(x - 1, y);
+                invert(x + 1, y);
+                invert(x, y - 1);
+                invert(x, y + 1);
+            }
         }
     }
 
@@ -85,6 +101,28 @@ public class GameModel
     {
         this.mode = action;
 
+        for (int i = 0 ; i < ACTION_LIST.length ; i ++)
+            this.btnState[i] = !this.mode.equals(ACTION_LIST[i]);
+
+        /*
+        switch (action)
+        {
+            case PLAY:
+                btnState = {}
+                break;
+            case EDIT:
+
+                break;
+            case STOP:
+
+                break;
+            case EXIT:
+
+                break;
+            default:
+                break;
+        }*/
+/*
         switch (action)
         {
             case PLAY:
@@ -107,7 +145,7 @@ public class GameModel
             default:
                 break;
         }
-
+*/
     }
 
     public void initialGrid ()
@@ -122,7 +160,7 @@ public class GameModel
         return this.lights[x][y];
     }
 
-
+/*
     public boolean getEditorMode() {
         return editorMode;
     }
@@ -139,5 +177,33 @@ public class GameModel
     public void setModeN(int modeN) {
         this.modeN = modeN;
     }
+*/
 
+    public boolean isWin() {
+        return isWin;
+    }
+
+    public void setWin(boolean win) {
+        isWin = win;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public boolean[] getBtnState() {
+        return btnState;
+    }
+
+    public void setBtnState(boolean[] btnState) {
+        this.btnState = btnState;
+    }
+
+    public boolean getBtnState(int index) {
+        return btnState[index];
+    }
 }
