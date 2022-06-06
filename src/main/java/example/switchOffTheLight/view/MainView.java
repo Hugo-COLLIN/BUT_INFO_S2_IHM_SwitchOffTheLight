@@ -19,7 +19,7 @@ public class MainView extends BorderPane
         this.setCenter(this.gridView);
 
         this.menuView = new MenuView(m, this);
-        this.setBottom(menuView);
+        this.setRight(menuView);
     }
 
     //Methods

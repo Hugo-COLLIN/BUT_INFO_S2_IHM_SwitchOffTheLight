@@ -2,8 +2,11 @@ package example.switchOffTheLight.view;
 
 import example.switchOffTheLight.controller.ClickOnButtonController;
 import example.switchOffTheLight.model.GameModel;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
@@ -25,15 +28,24 @@ public class MenuView extends HBox
 
     public void makeMenu()
     {
+        this.setPadding(new Insets(10));
+        this.setWidth(100);
+
+        VBox menu = new VBox(5);
+        menu.setAlignment(Pos.TOP_CENTER);
+
         for (String action : GameModel.ACTION_LIST)
         {
             Button b = new Button(action);
+            b.setPrefWidth(this.getWidth());
 
             b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action));
 
             this.btnList.add(b);
-            this.getChildren().add(b);
+            menu.getChildren().add(b);
         }
+        this.getChildren().add(menu);
+
         this.update();
     }
 
