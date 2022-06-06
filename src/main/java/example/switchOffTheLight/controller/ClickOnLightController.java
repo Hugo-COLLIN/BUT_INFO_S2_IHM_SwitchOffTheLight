@@ -1,7 +1,6 @@
 package example.switchOffTheLight.controller;
 
 import example.switchOffTheLight.model.GameModel;
-import example.switchOffTheLight.view.GridView;
 import example.switchOffTheLight.view.MainView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +19,7 @@ public class ClickOnLightController implements EventHandler<MouseEvent> {
 
 
     GameModel model;
-    GridView view;
+    MainView mainView;
 
     int btnX, btnY;
 
@@ -28,9 +27,9 @@ public class ClickOnLightController implements EventHandler<MouseEvent> {
         Prend souvent en parametre modele et vue car pas
         souvent cree en interne
      */
-    public ClickOnLightController(GameModel model, GridView view, int x, int y) {
+    public ClickOnLightController(GameModel model, MainView mainView, int x, int y) {
         this.model = model;
-        this.view = view;
+        this.mainView = mainView;
         this.btnX = x;
         this.btnY = y;
     }
@@ -41,7 +40,7 @@ public class ClickOnLightController implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent mouseEvent) {
         this.model.clickOnLight(this.btnX, this.btnY);
-        this.view.update();
+        this.mainView.update();
         /*
         model.deplacer(); // Deplace le cercle non graphique
         model.agrandir(); // Agrandit le cercle

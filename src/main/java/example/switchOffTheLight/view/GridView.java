@@ -13,7 +13,7 @@ public class GridView extends GridPane
 
     GameModel model;
 
-    MainView view;
+    MainView mainView;
 
     Rectangle[][] rectList;
 
@@ -21,7 +21,7 @@ public class GridView extends GridPane
     {
         //int count = GridModel.LENGTH_X;
         this.model = m;
-        this.view = v;
+        this.mainView = v;
         this.rectList = new Rectangle[GameModel.LENGTH_X][GameModel.LENGTH_Y];
 
         //for (int i = 0 ; i < count ; i ++)
@@ -53,7 +53,7 @@ public class GridView extends GridPane
         this.rectList[x][y] = rect;
 
         rect.setOnMouseClicked(
-                new ClickOnLightController(this.model, this, x, y)
+                new ClickOnLightController(this.model, this.mainView, x, y)
                 //new ClickOnButtonController(this.model, this, (int)(rect.getX() / TAILLE_CASE), (int)(rect.getY() / TAILLE_CASE))
         );
 
