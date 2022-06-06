@@ -1,6 +1,7 @@
 package example.switchOffTheLight.controller;
 
 import example.switchOffTheLight.model.GameModel;
+import example.switchOffTheLight.view.MainView;
 import example.switchOffTheLight.view.MenuView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,12 +20,12 @@ public class ClickOnButtonController implements EventHandler<ActionEvent> {
 
 
     GameModel model;
-    MenuView view;
+    MainView view;
 
     String action;
 
 
-    public ClickOnButtonController(GameModel model, MenuView view, String action) {
+    public ClickOnButtonController(GameModel model, MainView view, String action) {
         this.model = model;
         this.view = view;
         this.action = action;

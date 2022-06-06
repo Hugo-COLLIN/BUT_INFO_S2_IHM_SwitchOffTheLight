@@ -11,11 +11,14 @@ public class MenuView extends HBox
 {
     GameModel model;
 
+    MainView mainView;
+
     ArrayList<Button> btnList;
 
-    public MenuView (GameModel model)
+    public MenuView (GameModel model, MainView mainView)
     {
         this.model = model;
+        this.mainView = mainView;
         this.btnList = new ArrayList<>();
         this.makeMenu();
     }
@@ -26,10 +29,9 @@ public class MenuView extends HBox
         {
             Button b = new Button(action);
 
-            b.setOnAction(new ClickOnButtonController(this.model, this, action));
+            b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action));
 
             this.btnList.add(b);
-            //b.setOnMouseClicked(new ActionClicController(this.model, this));
             this.getChildren().add(b);
         }
         this.update();
@@ -37,6 +39,9 @@ public class MenuView extends HBox
 
     public void update()
     {
+        if (this.model.getMode().equals(GameModel.EXIT))
+            System.exit(0);
+
         for (int i = 0 ; i < this.btnList.size() ; i ++)
             this.btnList.get(i).setDisable(!this.model.getBtnState(i));
 

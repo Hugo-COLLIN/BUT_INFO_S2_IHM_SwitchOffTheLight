@@ -22,11 +22,11 @@ public class GameModel
 
     public static final String
             PLAY = "Jouer",
-            EDIT = "Configurer",
+            CONF = "Configurer",
             STOP = "Arrêter",
             EXIT = "Sortir";
 
-    public static final String [] ACTION_LIST = {PLAY, EDIT, STOP, EXIT};
+    public static final String [] ACTION_LIST = {PLAY, CONF, STOP, EXIT};
     public boolean [] btnState;
 
     /*
@@ -97,12 +97,21 @@ public class GameModel
         return x >= 0 && x < LENGTH_X && y >= 0 && y < LENGTH_Y;
     }
 
+    public boolean isClearGame ()
+    {
+        return (!this.isWin() && this.mode.equals(GameModel.STOP))
+                || (this.isWin() && this.mode.equals(GameModel.PLAY));
+    }
+
     public void buttonTriggered(String action)
     {
         this.mode = action;
 
         for (int i = 0 ; i < ACTION_LIST.length ; i ++)
             this.btnState[i] = !this.mode.equals(ACTION_LIST[i]);
+
+        if (isClearGame())
+            this.initialGrid();
 
         /*
         switch (action)

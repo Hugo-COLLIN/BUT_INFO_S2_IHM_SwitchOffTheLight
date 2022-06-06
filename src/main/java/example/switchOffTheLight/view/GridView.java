@@ -31,7 +31,7 @@ public class GridView extends GridPane
         this.setVgap(5);
         this.setPadding(new Insets(5));
 
-        makeGridLigths();
+        this.makeGridLigths();
     }
 
     public void makeGridLigths ()
