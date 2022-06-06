@@ -9,7 +9,7 @@ public class GameModel
     //HashMap<String, Boolean> btnsStatus;
 
     private boolean
-            isWin/*,
+            winState/*,
             editorMode,
             endGame,
             systemExit*/;
@@ -23,10 +23,10 @@ public class GameModel
     public static final String
             PLAY = "Jouer",
             CONF = "Configurer",
-            STOP = "Arrêter",
+            END = "Arrêter",
             EXIT = "Sortir";
 
-    public static final String [] ACTION_LIST = {PLAY, CONF, STOP, EXIT};
+    public static final String [] ACTION_LIST = {PLAY, CONF, END, EXIT};
     public boolean [] btnState;
 
     /*
@@ -36,6 +36,7 @@ public class GameModel
 
      */
 
+    //Constructor
     public GameModel() {
         this.lights = new boolean[LENGTH_X][LENGTH_Y];
         //this.btnsStatus = new HashMap<>();
@@ -55,7 +56,7 @@ public class GameModel
 
 
         //this.modeN = 2;
-        this.isWin = false;
+        this.winState = false;
 
         this.initialGrid();
 
@@ -70,9 +71,11 @@ public class GameModel
          */
     }
 
+    //Methods
+    // >Possible actions
     public void clickOnLight (int x, int y)
     {
-        if (!this.mode.equals(STOP))
+        if (!this.mode.equals(END))
         {
             invert(x,y);
 
@@ -83,24 +86,11 @@ public class GameModel
                 invert(x, y - 1);
                 invert(x, y + 1);
             }
+
+
+            if (isWin())
+                this.winAction();
         }
-    }
-
-    public void invert (int x, int y)
-    {
-        if (inGrid(x, y))
-            this.lights[x][y] = !this.lights[x][y];
-    }
-
-    public boolean inGrid (int x, int y)
-    {
-        return x >= 0 && x < LENGTH_X && y >= 0 && y < LENGTH_Y;
-    }
-
-    public boolean isClearGame ()
-    {
-        return (!this.isWin() && this.mode.equals(GameModel.STOP))
-                || (this.isWin() && this.mode.equals(GameModel.PLAY));
     }
 
     public void buttonTriggered(String action)
@@ -112,59 +102,54 @@ public class GameModel
 
         if (isClearGame())
             this.initialGrid();
+    }
 
-        /*
-        switch (action)
-        {
-            case PLAY:
-                btnState = {}
-                break;
-            case EDIT:
+    // >Grid
+    public void invert (int x, int y)
+    {
+        if (inGrid(x, y))
+            this.lights[x][y] = !this.lights[x][y];
+    }
 
-                break;
-            case STOP:
-
-                break;
-            case EXIT:
-
-                break;
-            default:
-                break;
-        }*/
-/*
-        switch (action)
-        {
-            case PLAY:
-                this.modeN = 0;
-                this.editorMode = false;
-                this.endGame = false;
-                break;
-            case CONF:
-                this.modeN = 1;
-                this.editorMode = true;
-                break;
-            case STOP:
-                this.modeN = 2;
-                this.editorMode = true;
-                this.endGame = true;
-                break;
-            case EXIT:
-                this.modeN = 3;
-                this.systemExit = true;
-            default:
-                break;
-        }
-*/
+    public boolean inGrid (int x, int y)
+    {
+        return x >= 0 && x < LENGTH_X && y >= 0 && y < LENGTH_Y;
     }
 
     public void initialGrid ()
     {
+        this.winState = false;
         for (int i = 0 ; i < LENGTH_X ; i ++)
             for (int j = 0 ; j < LENGTH_Y ; j ++)
                 this.lights[i][j] = false;
     }
 
-    //Getter
+    public boolean isClearGame ()
+    {
+        return (!this.winState && this.mode.equals(GameModel.END))
+                || (this.winState && this.mode.equals(GameModel.PLAY));
+    }
+
+
+    // >Winning
+    public boolean isWin ()
+    {
+        if (!this.mode.equals(PLAY)) return false;
+
+        for (int i = 0 ; i < LENGTH_X ; i ++)
+            for (int j = 0; j < LENGTH_Y; j++)
+                if (this.lights[i][j]) return false;
+
+        return true;
+    }
+
+    public void winAction ()
+    {
+        this.mode = END;
+        this.winState = true;
+    }
+
+    // >Getters
     public boolean getLight(int x, int y) {
         return this.lights[x][y];
     }
@@ -188,12 +173,12 @@ public class GameModel
     }
 */
 
-    public boolean isWin() {
-        return isWin;
+    public boolean getWinState() {
+        return winState;
     }
 
-    public void setWin(boolean win) {
-        isWin = win;
+    public void setWinState(boolean winState) {
+        this.winState = winState;
     }
 
     public String getMode() {
@@ -215,4 +200,5 @@ public class GameModel
     public boolean getBtnState(int index) {
         return btnState[index];
     }
+
 }

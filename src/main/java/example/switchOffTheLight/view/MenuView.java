@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,8 @@ public class MenuView extends HBox
     MainView mainView;
 
     ArrayList<Button> btnList;
+
+    Text win;
 
     public MenuView (GameModel model, MainView mainView)
     {
@@ -44,8 +47,11 @@ public class MenuView extends HBox
             this.btnList.add(b);
             menu.getChildren().add(b);
         }
-        this.getChildren().add(menu);
+        win = new Text("Vous avez gagné !");
+        win.setVisible(false);
+        menu.getChildren().add(win);
 
+        this.getChildren().add(menu);
         this.update();
     }
 
@@ -54,34 +60,9 @@ public class MenuView extends HBox
         if (this.model.getMode().equals(GameModel.EXIT))
             System.exit(0);
 
+        this.win.setVisible(this.model.getWinState());
+
         for (int i = 0 ; i < this.btnList.size() ; i ++)
             this.btnList.get(i).setDisable(!this.model.getBtnState(i));
-
-        /*
-        for (int i = 0 ; i < 3 ; i ++)
-            if ()
-            /*
-            if (this.model.getModeN() == i)
-                btnList.get(i).setDisable(btnState[i]);
-            else
-                btnList.get(i).setDisable(!btnState[i]);
-            */
-
-
-        /*
-        if (this.model.getMode().equals(GameModel.EDIT))
-        {
-            btnList.get(0).setDisable(false);
-            btnList.get(1).setDisable(true);
-            btnList.get(2).setDisable(true);
-        }
-        else
-        {
-            btnList.get(0).setDisable(true);
-            btnList.get(1).setDisable(false);
-            btnList.get(2).setDisable(false);
-        }
-                */
-
     }
 }
