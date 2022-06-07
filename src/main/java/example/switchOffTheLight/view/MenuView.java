@@ -20,7 +20,7 @@ public class MenuView extends HBox
 
     ArrayList<Button> btnList;
 
-    Text win;
+    Text win, errNumberText;
 
     public MenuView (GameModel model, MainView mainView)
     {
@@ -35,7 +35,9 @@ public class MenuView extends HBox
         this.setPadding(new Insets(10));
         this.setWidth(100);
 
-        TextField lightsField;
+        //TextField for button controller
+        TextField lightsField = new TextField();
+        lightsField.setPrefWidth(this.getWidth() / 2);
 
         VBox menu = new VBox(5);
         menu.setAlignment(Pos.TOP_CENTER);
@@ -43,7 +45,7 @@ public class MenuView extends HBox
         for (String action : GameModel.ACTION_LIST)
         {
             Button b = new Button(action);
-            b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action));
+            b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action, lightsField));
 
             b.setPrefWidth(this.getWidth());
 
@@ -56,12 +58,15 @@ public class MenuView extends HBox
                 HBox hb = new HBox(5);
                 Text lightsText = new Text("Cases : ");
 
-                lightsField = new TextField();
-                lightsField.setPrefWidth(this.getWidth() / 2);
+                //lightsField =
+
 
                 hb.getChildren().addAll(lightsText, lightsField);
-
                 menu.getChildren().add(hb);
+
+                errNumberText = new Text("Nombre saisi incorrect.");
+                errNumberText.setVisible(false);
+                menu.getChildren().add(errNumberText);
             }
         }
         win = new Text("Vous avez gagné !");
@@ -78,8 +83,14 @@ public class MenuView extends HBox
             System.exit(0);
 
         this.win.setVisible(this.model.getWinState());
+        this.errNumberText.setVisible(!this.model.getLightsFieldInt());
 
         for (int i = 0 ; i < this.btnList.size() ; i ++)
             this.btnList.get(i).setDisable(!this.model.getBtnState(i));
+    }
+
+    public void incorrectNumberField ()
+    {
+
     }
 }

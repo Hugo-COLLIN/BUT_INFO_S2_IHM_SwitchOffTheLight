@@ -1,7 +1,5 @@
 package example.switchOffTheLight.model;
 
-import java.util.Objects;
-
 public class GameModel
 {
     private boolean [][] lights;
@@ -11,10 +9,8 @@ public class GameModel
     //HashMap<String, Boolean> btnsStatus;
 
     private boolean
-            winState/*,
-            editorMode,
-            endGame,
-            systemExit*/;
+            winState,
+            lightsFieldInt;
 
     private String mode;
 
@@ -60,6 +56,7 @@ public class GameModel
 
         //this.modeN = 2;
         this.winState = false;
+        this.lightsFieldInt = false;
 
         this.initialGrid();
 
@@ -96,12 +93,12 @@ public class GameModel
         }
     }
 
-    public void buttonTriggered(String action)
+    public void buttonTriggered(String action, int nbCases)
     {
-        /*if (this.mode.equals(CONF) && action.equals(CONF))
-            this.aleaLights();
-
-         */
+        this.lightsFieldInt = nbCases >= 0;
+        if (this.mode.equals(CONF) && action.equals(CONF))
+            this.aleaLights(nbCases);
+        
         this.mode = action;
 
         for (int i = 0 ; i < ACTION_LIST.length ; i ++)
@@ -134,6 +131,8 @@ public class GameModel
 
     public void aleaLights (int n)
     {
+        if (!this.lightsFieldInt) return;
+
         int xAlea, yAlea;
         for (int i = 0 ; i < n ; i ++)
         {
@@ -171,29 +170,16 @@ public class GameModel
         this.winState = true;
     }
 
+    // >Light number input
+    public void setLightsFieldInt(boolean b)
+    {
+        this.lightsFieldInt = b;
+    }
+
     // >Getters
     public boolean getLight(int x, int y) {
         return this.lights[x][y];
     }
-
-/*
-    public boolean getEditorMode() {
-        return editorMode;
-    }
-
-    public void setEditorMode(boolean editorMode) {
-        this.editorMode = editorMode;
-    }
-
-
-    public int getModeN() {
-        return modeN;
-    }
-
-    public void setModeN(int modeN) {
-        this.modeN = modeN;
-    }
-*/
 
     public boolean getWinState() {
         return winState;
@@ -223,4 +209,8 @@ public class GameModel
         return btnState[index];
     }
 
+    public boolean getLightsFieldInt ()
+    {
+        return this.lightsFieldInt;
+    }
 }

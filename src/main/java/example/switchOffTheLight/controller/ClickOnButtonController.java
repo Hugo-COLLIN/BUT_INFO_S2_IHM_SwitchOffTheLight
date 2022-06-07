@@ -2,9 +2,9 @@ package example.switchOffTheLight.controller;
 
 import example.switchOffTheLight.model.GameModel;
 import example.switchOffTheLight.view.MainView;
-import example.switchOffTheLight.view.MenuView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.TextField;
 
 public class ClickOnButtonController implements EventHandler<ActionEvent> {
 
@@ -21,19 +21,29 @@ public class ClickOnButtonController implements EventHandler<ActionEvent> {
 
     GameModel model;
     MainView view;
-
     String action;
+    int nbCases;
 
 
-    public ClickOnButtonController(GameModel model, MainView view, String action) {
+    public ClickOnButtonController(GameModel model, MainView view, String action, TextField lightF) {
         this.model = model;
         this.view = view;
         this.action = action;
+
+        try {
+            //this.model.setLightsFieldInt(true);
+            this.nbCases = Integer.parseInt(lightF.getText());
+        }
+        catch (NumberFormatException e)
+        {
+            //this.model.setLightsFieldInt(false);
+            this.nbCases = -1;
+        }
     }
 
     @Override
     public void handle(ActionEvent mouseEvent) {
-        this.model.buttonTriggered(this.action);
+        this.model.buttonTriggered(this.action, this.nbCases);
         this.view.update();
     }
 }
