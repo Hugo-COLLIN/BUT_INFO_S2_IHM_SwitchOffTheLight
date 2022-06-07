@@ -5,6 +5,7 @@ import example.switchOffTheLight.model.GameModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -34,18 +35,34 @@ public class MenuView extends HBox
         this.setPadding(new Insets(10));
         this.setWidth(100);
 
+        TextField lightsField;
+
         VBox menu = new VBox(5);
         menu.setAlignment(Pos.TOP_CENTER);
 
         for (String action : GameModel.ACTION_LIST)
         {
             Button b = new Button(action);
-            b.setPrefWidth(this.getWidth());
-
             b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action));
+
+            b.setPrefWidth(this.getWidth());
 
             this.btnList.add(b);
             menu.getChildren().add(b);
+
+
+            if (action.equals(GameModel.CONF))
+            {
+                HBox hb = new HBox(5);
+                Text lightsText = new Text("Cases : ");
+
+                lightsField = new TextField();
+                lightsField.setPrefWidth(this.getWidth() / 2);
+
+                hb.getChildren().addAll(lightsText, lightsField);
+
+                menu.getChildren().add(hb);
+            }
         }
         win = new Text("Vous avez gagné !");
         win.setVisible(false);

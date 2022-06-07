@@ -1,5 +1,7 @@
 package example.switchOffTheLight.model;
 
+import java.util.Objects;
+
 public class GameModel
 {
     private boolean [][] lights;
@@ -24,7 +26,8 @@ public class GameModel
             PLAY = "Jouer",
             CONF = "Configurer",
             END = "Arrêter",
-            EXIT = "Sortir";
+            EXIT = "Sortir",
+            RAND = "Aléatoire";
 
     public static final String [] ACTION_LIST = {PLAY, CONF, END, EXIT};
     public boolean [] btnState;
@@ -95,10 +98,15 @@ public class GameModel
 
     public void buttonTriggered(String action)
     {
+        /*if (this.mode.equals(CONF) && action.equals(CONF))
+            this.aleaLights();
+
+         */
         this.mode = action;
 
         for (int i = 0 ; i < ACTION_LIST.length ; i ++)
-            this.btnState[i] = !this.mode.equals(ACTION_LIST[i]);
+            if (!(i == 1 && (this.mode.equals(CONF) || this.mode.equals(RAND))))
+                this.btnState[i] = !this.mode.equals(ACTION_LIST[i]);
 
         if (isClearGame())
             this.initialGrid();
@@ -122,6 +130,20 @@ public class GameModel
         for (int i = 0 ; i < LENGTH_X ; i ++)
             for (int j = 0 ; j < LENGTH_Y ; j ++)
                 this.lights[i][j] = false;
+    }
+
+    public void aleaLights (int n)
+    {
+        int xAlea, yAlea;
+        for (int i = 0 ; i < n ; i ++)
+        {
+            do {
+                xAlea = (int) Math.round(Math.random() * LENGTH_X);
+                yAlea = (int) Math.round(Math.random() * LENGTH_Y);
+            }
+            while (this.lights[xAlea][yAlea]);
+            this.invert(xAlea, yAlea);
+        }
     }
 
     public boolean isClearGame ()
