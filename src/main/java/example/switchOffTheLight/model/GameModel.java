@@ -13,13 +13,20 @@ public class GameModel
             LENGTH_Y = 3;
 
     public static final String
-            PLAY = "Jouer",
-            CONF = "Configurer",
-            END = "Arrêter",
-            EXIT = "Sortir",
-            RAND = "Aléatoire";
+            PLAY = "▶ Jouer",
+            PAUSE = "⏸ Pause", //🎲🔮⚰🔌🀄🃏🧩🧸🧿🏆🥇🚨🏁🏴‍☠️🧭🌌🪐
+            RESTART = " Rejouer", //🔁
+            CONF = "🔧 Configurer",
+            RAND = "\uD83D\uDD01 Aléatoire", //🎲
+            END = "❌ Abandonner",
+            EXIT = "\uD83D\uDEA8 Sortir"; //🌙💤💫
 
     public static final String [] ACTION_LIST = {PLAY, CONF, END, EXIT};
+
+    //public static final char PLAYICON = '▶',
+
+
+    //public static final char [] ICONS = {'▶', '⚙', '❌', '🔁⏹🔄📴💣💡🔦'};
 
 
     //Constructor
@@ -61,7 +68,7 @@ public class GameModel
         }
     }
 
-    public void buttonTriggered(String action)
+    public void changeButtonStatus(String action)
     {
         /*
         if (action.equals(CONF))
@@ -80,14 +87,20 @@ public class GameModel
         else if (this.mode.equals(CONF))
             this.randBtn = false;
 
+        if (this.winState) this.winState = false;
+
+
+
         this.mode = action;
 
         if (this.mode.equals(PLAY))
             this.nbClicks = 0;
 
         for (int i = 0 ; i < ACTION_LIST.length ; i ++)
-            if (!(i == 1 && (this.mode.equals(CONF) || this.mode.equals(RAND))))
+            if (!((i == 1 || i == 2) && this.mode.equals(CONF)))
                 this.btnState[i] = !this.mode.equals(ACTION_LIST[i]);
+            else
+                this.btnState[i] = this.mode.equals(ACTION_LIST[i]);
 
         if (isClearGame())
             this.initialGrid();
@@ -180,6 +193,7 @@ public class GameModel
     {
         this.mode = END;
         this.winState = true;
+        this.changeButtonStatus(this.mode);
     }
 
     // >Getters
