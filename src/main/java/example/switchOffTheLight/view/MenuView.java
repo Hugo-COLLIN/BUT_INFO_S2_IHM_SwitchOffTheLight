@@ -57,13 +57,16 @@ public class MenuView extends HBox
 
             if (action.equals(GameModel.PLAY))
             {
-                HBox hb = new HBox(5);
-                Text clicksText = new Text("Nombre de clics : ");
+                HBox hb = new HBox();
+                hb.setAlignment(Pos.CENTER);
+
+                Text clicksText = new Text(" clics !");
                 clicksField = new Text();
 
-                hb.getChildren().addAll(clicksText, clicksField);
+                hb.getChildren().addAll(clicksField, clicksText);
                 menu.getChildren().add(hb);
             }
+            /*
             if (action.equals(GameModel.CONF))
             {
                 HBox hb = new HBox(5);
@@ -76,6 +79,7 @@ public class MenuView extends HBox
                 errNumberText.setVisible(false);
                 menu.getChildren().add(errNumberText);
             }
+                         */
         }
         win = new Text("Vous avez gagné !");
         win.setVisible(false);
@@ -92,7 +96,8 @@ public class MenuView extends HBox
 
         clicksField.setText(String.valueOf(this.model.getNbClicks()));
         this.win.setVisible(this.model.getWinState());
-        this.errNumberText.setVisible(!this.model.getLightsFieldInt());
+        //this.errNumberText.setVisible(!this.model.getLightsFieldInt());
+        this.btnList.get(1).setText(this.model.setTextTwoSidedBtn());
 
         for (int i = 0 ; i < this.btnList.size() ; i ++)
             this.btnList.get(i).setDisable(!this.model.getBtnState(i));

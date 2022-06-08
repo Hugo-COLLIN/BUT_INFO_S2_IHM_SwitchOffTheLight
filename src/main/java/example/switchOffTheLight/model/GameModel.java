@@ -3,13 +3,10 @@ package example.switchOffTheLight.model;
 public class GameModel
 {
     private boolean [][] lights;
-
-    //0 : playMode, 1 : editorMode, 2 : endMode, 3 : exitMode
-    private boolean
-            winState,
-            lightsFieldInt;
-
-    private String mode;
+    private boolean winState, lightsFieldInt, randBtn;
+    private String mode; //0 : playMode, 1 : editorMode, 2 : endMode, 3 : exitMode
+    public boolean [] btnState;
+    private int nbClicks;
 
     public static final int
             LENGTH_X = 4,
@@ -23,60 +20,34 @@ public class GameModel
             RAND = "Aléatoire";
 
     public static final String [] ACTION_LIST = {PLAY, CONF, END, EXIT};
-    public boolean [] btnState;
-    private int nbClicks;
 
-    /*
-    public static final boolean []
-            BTNS_STATE_PLAY = {false, true, true, true},
-            BTNS_STATE_EDIT = {true, true, false, true};
-
-     */
 
     //Constructor
     public GameModel() {
         this.lights = new boolean[LENGTH_X][LENGTH_Y];
-        //this.btnsStatus = new HashMap<>();
+
+        this.winState = false;
+        this.randBtn = false;
+        this.lightsFieldInt = false;
 
         this.mode = "Arrêter";
         this.btnState = new boolean[]{true, true, false, true};
-
-        /*
-        boolean tmp = false;
-        for (String action : ACTION_LIST)
-        {
-            btnsStatus.put(action, tmp);
-            tmp = true;
-        }
-        System.out.println(btnsStatus);
-         */
-
-
-        //this.modeN = 2;
-        this.winState = false;
-        this.lightsFieldInt = false;
+        this.nbClicks = 0;
 
         this.initialGrid();
-
-
-
-        //toDel
-        /*
-        this.editorMode = true;
-        this.endGame = false;
-        this.systemExit = false;
-
-         */
     }
 
+
     //Methods
-    // >Possible actions
+    // >Possible user actions
     public void clickOnLight (int x, int y)
     {
         if (!this.mode.equals(END))
         {
-            nbClicks ++;
             invert(x,y);
+
+            if (!this.mode.equals(CONF))
+                nbClicks ++;
 
             if (this.mode.equals(PLAY))
             {
@@ -86,17 +57,24 @@ public class GameModel
                 invert(x, y + 1);
             }
 
-
             if (isWin())
                 this.winAction();
         }
     }
 
-    public void buttonTriggered(String action, int nbCases)
+    public void buttonTriggered(String action, int customLightsOn)
     {
-        this.lightsFieldInt = nbCases >= 0;
-        if (this.mode.equals(CONF) && action.equals(CONF))
-            this.aleaLights(nbCases);
+        //this.lightsFieldInt = customLightsOn >= 0;
+        if (this.mode.equals(CONF))
+        {
+            if (action.equals(CONF))
+            {
+                this.randBtn = true;
+                this.aleaLights();
+                //this.aleaLights(customLightsOn);
+            }
+            else this.randBtn = false;
+        }
 
         this.mode = action;
 
@@ -111,24 +89,20 @@ public class GameModel
             this.initialGrid();
     }
 
-    // >Grid
-    public void invert (int x, int y)
-    {
-        if (inGrid(x, y))
-            this.lights[x][y] = !this.lights[x][y];
-    }
 
-    public boolean inGrid (int x, int y)
-    {
-        return x >= 0 && x < LENGTH_X && y >= 0 && y < LENGTH_Y;
-    }
-
+    // >Grid methods
     public void initialGrid ()
     {
         this.winState = false;
         for (int i = 0 ; i < LENGTH_X ; i ++)
             for (int j = 0 ; j < LENGTH_Y ; j ++)
                 this.lights[i][j] = false;
+    }
+
+    public void invert (int x, int y)
+    {
+        if (inGrid(x, y))
+            this.lights[x][y] = !this.lights[x][y];
     }
 
     public void aleaLights (int n)
@@ -146,7 +120,41 @@ public class GameModel
             this.invert(xAlea, yAlea);
         }
     }
+    public void aleaLights ()
+    {
+        int xAlea, yAlea;
 
+        //Switch off all the lights
+        this.initialGrid();
+
+        //Generate a number between 0 and the number of lights on the board
+        int n = (int)Math.round(Math.random() * LENGTH_X * LENGTH_Y);
+
+        for (int i = 0 ; i < n ; i ++)
+        {
+            do {
+                xAlea = (int) Math.round(Math.random() * (LENGTH_X - 1));
+                yAlea = (int) Math.round(Math.random() * (LENGTH_Y - 1));
+            }
+            while (this.lights[xAlea][yAlea]);
+            this.invert(xAlea, yAlea);
+        }
+    }
+
+    public boolean inGrid (int x, int y)
+    {
+        return x >= 0 && x < LENGTH_X && y >= 0 && y < LENGTH_Y;
+    }
+
+    // >Buttons
+    public String setTextTwoSidedBtn ()
+    {
+        if (randBtn)
+            return RAND;
+        return CONF;
+    }
+
+    // >Meca jeu
     public boolean isClearGame ()
     {
         return (!this.winState && this.mode.equals(GameModel.END))
@@ -222,5 +230,13 @@ public class GameModel
 
     public void setNbClicks(int nbClicks) {
         this.nbClicks = nbClicks;
+    }
+
+    public boolean getRandBtn() {
+        return randBtn;
+    }
+
+    public void setRandBtn(boolean randBtn) {
+        this.randBtn = randBtn;
     }
 }
