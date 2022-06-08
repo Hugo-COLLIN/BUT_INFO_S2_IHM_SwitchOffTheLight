@@ -81,7 +81,7 @@ public class MenuView extends HBox
             }
                          */
         }
-        win = new Text("Vous avez gagné !");
+        win = new Text("🏁 Vous avez gagné !");
         win.setVisible(false);
         menu.getChildren().add(win);
 
