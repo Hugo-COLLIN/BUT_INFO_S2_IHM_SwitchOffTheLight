@@ -97,7 +97,7 @@ public class MenuView extends HBox
         clicksField.setText(String.valueOf(this.model.getNbClicks()));
         this.win.setVisible(this.model.getWinState());
         //this.errNumberText.setVisible(!this.model.getLightsFieldInt());
-        this.btnList.get(1).setText(this.model.setTextTwoSidedBtn());
+        this.btnList.get(1).setText(this.model.textTwoSidedBtn());
 
         for (int i = 0 ; i < this.btnList.size() ; i ++)
             this.btnList.get(i).setDisable(!this.model.getBtnState(i));

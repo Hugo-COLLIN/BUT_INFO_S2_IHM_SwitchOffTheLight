@@ -3,7 +3,7 @@ package example.switchOffTheLight.model;
 public class GameModel
 {
     private boolean [][] lights;
-    private boolean winState, lightsFieldInt, randBtn;
+    private boolean winState, randBtn;
     private String mode; //0 : playMode, 1 : editorMode, 2 : endMode, 3 : exitMode
     public boolean [] btnState;
     private int nbClicks;
@@ -28,7 +28,6 @@ public class GameModel
 
         this.winState = false;
         this.randBtn = false;
-        this.lightsFieldInt = false;
 
         this.mode = "Arrêter";
         this.btnState = new boolean[]{true, true, false, true};
@@ -62,19 +61,24 @@ public class GameModel
         }
     }
 
-    public void buttonTriggered(String action, int customLightsOn)
+    public void buttonTriggered(String action)
     {
-        //this.lightsFieldInt = customLightsOn >= 0;
-        if (this.mode.equals(CONF))
-        {
-            if (action.equals(CONF))
-            {
+        /*
+        if (action.equals(CONF))
+            if (!this.mode.equals(CONF))
                 this.randBtn = true;
+            else
                 this.aleaLights();
-                //this.aleaLights(customLightsOn);
-            }
-            else this.randBtn = false;
-        }
+        else if (this.mode.equals(CONF))
+            this.randBtn = false;
+        */
+
+        if (!this.mode.equals(CONF) && action.equals(CONF))
+            this.randBtn = true;
+        else if (this.mode.equals(CONF) && action.equals(CONF))
+            this.aleaLights();
+        else if (this.mode.equals(CONF))
+            this.randBtn = false;
 
         this.mode = action;
 
@@ -107,8 +111,6 @@ public class GameModel
 
     public void aleaLights (int n)
     {
-        if (!this.lightsFieldInt) return;
-
         int xAlea, yAlea;
         for (int i = 0 ; i < n ; i ++)
         {
@@ -147,7 +149,7 @@ public class GameModel
     }
 
     // >Buttons
-    public String setTextTwoSidedBtn ()
+    public String textTwoSidedBtn()
     {
         if (randBtn)
             return RAND;
@@ -178,12 +180,6 @@ public class GameModel
     {
         this.mode = END;
         this.winState = true;
-    }
-
-    // >Light number input
-    public void setLightsFieldInt(boolean b)
-    {
-        this.lightsFieldInt = b;
     }
 
     // >Getters
@@ -217,11 +213,6 @@ public class GameModel
 
     public boolean getBtnState(int index) {
         return btnState[index];
-    }
-
-    public boolean getLightsFieldInt ()
-    {
-        return this.lightsFieldInt;
     }
 
     public int getNbClicks() {
