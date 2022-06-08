@@ -4,10 +4,7 @@ public class GameModel
 {
     private boolean [][] lights;
 
-    //private int modeN; //0 : playMode, 1 : editorMode, 2 : endMode, 3 : exitMode
-
-    //HashMap<String, Boolean> btnsStatus;
-
+    //0 : playMode, 1 : editorMode, 2 : endMode, 3 : exitMode
     private boolean
             winState,
             lightsFieldInt;
@@ -27,6 +24,7 @@ public class GameModel
 
     public static final String [] ACTION_LIST = {PLAY, CONF, END, EXIT};
     public boolean [] btnState;
+    private int nbClicks;
 
     /*
     public static final boolean []
@@ -77,6 +75,7 @@ public class GameModel
     {
         if (!this.mode.equals(END))
         {
+            nbClicks ++;
             invert(x,y);
 
             if (this.mode.equals(PLAY))
@@ -98,8 +97,11 @@ public class GameModel
         this.lightsFieldInt = nbCases >= 0;
         if (this.mode.equals(CONF) && action.equals(CONF))
             this.aleaLights(nbCases);
-        
+
         this.mode = action;
+
+        if (this.mode.equals(PLAY))
+            this.nbClicks = 0;
 
         for (int i = 0 ; i < ACTION_LIST.length ; i ++)
             if (!(i == 1 && (this.mode.equals(CONF) || this.mode.equals(RAND))))
@@ -212,5 +214,13 @@ public class GameModel
     public boolean getLightsFieldInt ()
     {
         return this.lightsFieldInt;
+    }
+
+    public int getNbClicks() {
+        return nbClicks;
+    }
+
+    public void setNbClicks(int nbClicks) {
+        this.nbClicks = nbClicks;
     }
 }

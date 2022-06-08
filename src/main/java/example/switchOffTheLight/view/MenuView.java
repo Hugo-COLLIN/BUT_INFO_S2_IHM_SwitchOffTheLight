@@ -20,7 +20,7 @@ public class MenuView extends HBox
 
     ArrayList<Button> btnList;
 
-    Text win, errNumberText;
+    Text win, clicksField, errNumberText;
 
     public MenuView (GameModel model, MainView mainView)
     {
@@ -36,12 +36,15 @@ public class MenuView extends HBox
         this.setWidth(100);
 
         //TextField for button controller
+
+        //TextField for button controller
         TextField lightsField = new TextField();
         lightsField.setPrefWidth(this.getWidth() / 2);
 
         VBox menu = new VBox(5);
         menu.setAlignment(Pos.TOP_CENTER);
 
+        //Side action buttons
         for (String action : GameModel.ACTION_LIST)
         {
             Button b = new Button(action);
@@ -52,14 +55,19 @@ public class MenuView extends HBox
             this.btnList.add(b);
             menu.getChildren().add(b);
 
+            if (action.equals(GameModel.PLAY))
+            {
+                HBox hb = new HBox(5);
+                Text clicksText = new Text("Nombre de clics : ");
+                clicksField = new Text();
 
+                hb.getChildren().addAll(clicksText, clicksField);
+                menu.getChildren().add(hb);
+            }
             if (action.equals(GameModel.CONF))
             {
                 HBox hb = new HBox(5);
                 Text lightsText = new Text("Cases : ");
-
-                //lightsField =
-
 
                 hb.getChildren().addAll(lightsText, lightsField);
                 menu.getChildren().add(hb);
@@ -82,15 +90,11 @@ public class MenuView extends HBox
         if (this.model.getMode().equals(GameModel.EXIT))
             System.exit(0);
 
+        clicksField.setText(String.valueOf(this.model.getNbClicks()));
         this.win.setVisible(this.model.getWinState());
         this.errNumberText.setVisible(!this.model.getLightsFieldInt());
 
         for (int i = 0 ; i < this.btnList.size() ; i ++)
             this.btnList.get(i).setDisable(!this.model.getBtnState(i));
-    }
-
-    public void incorrectNumberField ()
-    {
-
     }
 }
