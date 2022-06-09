@@ -19,7 +19,7 @@ public class GameModel
             CONF = "🔧\nConfigurer",
             RAND = "\uD83D\uDD01\nAléatoire", //🔁 🎲
             END = "❌\nQuitter", //❌
-            EXIT = "\uD83D\uDEA8\nSortir", //🌙💤💫
+            EXIT = "\uD83D\uDEA8\nPartir", //🌙💤💫
             WIN = "🏁 Gagné !",
             CLICKS = " clics !";
 

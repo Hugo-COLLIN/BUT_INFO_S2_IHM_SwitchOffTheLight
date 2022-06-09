@@ -94,7 +94,7 @@ public class MenuView extends HBox
             System.exit(0);
 
         clicksField.setText(String.valueOf(this.model.getNbClicksGridPlay()));
-        this.win.setVisible(this.model.getWinState());
+        //this.win.setVisible(this.model.getWinState());
         this.btnList.get(1).setText(this.model.textTwoSidedBtn());
 
         for (int i = 0 ; i < this.btnList.size() ; i ++)

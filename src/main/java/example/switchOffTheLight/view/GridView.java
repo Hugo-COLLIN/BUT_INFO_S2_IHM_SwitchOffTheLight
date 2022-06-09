@@ -5,8 +5,10 @@ import example.switchOffTheLight.model.GameModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class GridView extends GridPane
 {
@@ -17,6 +19,8 @@ public class GridView extends GridPane
     MainView mainView;
 
     Rectangle[][] rectList;
+
+    Pane winPane;
 
     public GridView(GameModel m, MainView v)
     {
@@ -34,6 +38,7 @@ public class GridView extends GridPane
         this.setAlignment(Pos.CENTER);
 
         this.makeGridLigths();
+        this.makeWinScreen();
     }
 
     public void makeGridLigths ()
@@ -41,6 +46,25 @@ public class GridView extends GridPane
         for (int i = 0; i < GameModel.LENGTH_X; i ++)
             for (int j = 0; j < GameModel.LENGTH_Y; j ++)
                 makeRect(i, j);
+    }
+
+    public void makeWinScreen ()
+    {
+        winPane = new Pane();
+        winPane.setStyle("-fx-background-color: white");
+
+        winPane.setMaxSize(0, 0);
+        winPane.setVisible(false);
+
+        Text win = new Text(GameModel.WIN);
+        win.setFill(Color.RED);
+        win.setStyle("-fx-font-size: large;" +
+                "-fx-font-weight: bold;" +
+                "-fx-translate-x: -17em;" +
+                "-fx-translate-y: -15em"
+        );        winPane.getChildren().add(win);
+
+        this.add(winPane, 5, 5);
     }
 
     public void makeRect (int x, int y)
@@ -56,10 +80,7 @@ public class GridView extends GridPane
 
         rect.setOnMouseClicked(
                 new ClickOnLightController(this.model, this.mainView, x, y)
-                //new ClickOnButtonController(this.model, this, (int)(rect.getX() / TAILLE_CASE), (int)(rect.getY() / TAILLE_CASE))
         );
-
-        //this.setOnMouseClicked(new ClickOnGridController(model, this));
 
         this.add(rect, x, y);
 
@@ -77,14 +98,21 @@ public class GridView extends GridPane
 
     public void update ()
     {
+        if (this.model.getWinState())
+        {
+            this.winPane.setVisible(this.model.getWinState());
+            this.winPane.setMaxSize(00, 00);
+        }
+        else
+        {
+            this.winPane.setVisible(this.model.getWinState());
+            this.winPane.setMaxSize(0, 0);
+        }
+
         for (int i = 0; i < GameModel.LENGTH_X ; i ++)
             for (int j = 0; j < GameModel.LENGTH_Y ; j ++)
             {
-                //int tmp1 = i * GridModel.LENGTH_X + j;
-                //this.updateRectFill(this.rectList.get(i * GridModel.LENGTH_X + j), this.model.getLight(i, j));
-                //this.makeRect(i,j);
                 this.updateRectFill(this.rectList[i][j], this.model.getLight(i, j));
-                //System.out.println(i + "\n" + j + "\n" + tmp1);
             }
 
     }
