@@ -3,6 +3,7 @@ package example.switchOffTheLight.view;
 import example.switchOffTheLight.controller.ClickOnLightController;
 import example.switchOffTheLight.model.GameModel;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -30,6 +31,7 @@ public class GridView extends GridPane
         this.setHgap(5);
         this.setVgap(5);
         this.setPadding(new Insets(5));
+        this.setAlignment(Pos.CENTER);
 
         this.makeGridLigths();
     }

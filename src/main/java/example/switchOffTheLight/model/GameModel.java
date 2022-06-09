@@ -13,22 +13,17 @@ public class GameModel
             LENGTH_Y = 3;
 
     public static final String
-            PLAY = "▶ Jouer",
-            PAUSE = "⏸ Pause", //🎲🔮⚰🔌🀄🃏🧩🧸🧿🏆🥇🚨🏁🏴‍☠️🧭🌌🪐
-            RESTART = " Rejouer", //
-            CONF = "🔧 Configurer",
-            RAND = "\uD83D\uDD01 Aléatoire", //🔁 🎲
-            END = "❌ Abandonner", //❌
-            EXIT = "\uD83D\uDEA8 Sortir", //🌙💤💫
-            WIN = "🏁 Vous avez gagné !",
+            PLAY = "▶\nJouer", //▶
+            PAUSE = "⏸\nPause", //🎲🔮⚰🔌🀄🃏🧩🧸🧿🏆🥇🚨🏁🏴‍☠️🧭🌌🪐 🔁⏹🔄📴💣💡🔦
+            RESTART = "\nRejouer", //
+            CONF = "🔧\nConfigurer",
+            RAND = "\uD83D\uDD01\nAléatoire", //🔁 🎲
+            END = "❌\nQuitter", //❌
+            EXIT = "\uD83D\uDEA8\nSortir", //🌙💤💫
+            WIN = "🏁 Gagné !",
             CLICKS = " clics !";
 
-    public static final String [] ACTION_LIST = {PLAY, CONF, END, EXIT};
-
-    //public static final char PLAYICON = '▶',
-
-
-    //public static final char [] ICONS = {'▶', '⚙', '❌', '🔁⏹🔄📴💣💡🔦'};
+    public static final String [] BTN_LIST = {PLAY, CONF, END, EXIT};
 
 
     //Constructor
@@ -163,11 +158,11 @@ public class GameModel
         if (this.mode.equals(PLAY))
             this.nbClicksGridPlay = 0;
 
-        for (int i = 0 ; i < ACTION_LIST.length ; i ++)
+        for (int i = 0; i < BTN_LIST.length ; i ++)
             if (!((i == 1 || i == 2) && this.mode.equals(CONF)))
-                this.btnState[i] = !this.mode.equals(ACTION_LIST[i]);
+                this.btnState[i] = !this.mode.equals(BTN_LIST[i]);
             else
-                this.btnState[i] = this.mode.equals(ACTION_LIST[i]);
+                this.btnState[i] = this.mode.equals(BTN_LIST[i]);
     }
 
     public String textTwoSidedBtn()

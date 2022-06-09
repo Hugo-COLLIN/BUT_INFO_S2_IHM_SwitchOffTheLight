@@ -6,8 +6,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class MenuView extends HBox
 
     ArrayList<Button> btnList;
 
-    Text win, clicksField, errNumberText;
+    Text win, clicksField;
 
     public MenuView (GameModel model, MainView mainView)
     {
@@ -35,20 +37,27 @@ public class MenuView extends HBox
         this.setPadding(new Insets(10));
         this.setWidth(100);
 
-        //TextField for button controller
-        TextField lightsField = new TextField();
-        lightsField.setPrefWidth(this.getWidth() / 2);
-
         VBox menu = new VBox(5);
-        menu.setAlignment(Pos.TOP_CENTER);
+        menu.setAlignment(Pos.CENTER);
 
         //Side action buttons
-        for (String action : GameModel.ACTION_LIST)
+        for (String action : GameModel.BTN_LIST)
         {
             Button b = new Button(action);
             b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action));
 
-            b.setPrefWidth(this.getWidth());
+            //int n = b.getText().getC
+            b.setPrefWidth(85);
+            //b.setPrefHeight(this.getHeight() / 4);
+            b.setStyle(
+                    "-fx-background-color: orange;" +
+                    "-fx-border-color: darkorange;" +
+                    "-fx-border-radius: 5px;" +
+                    "-fx-font-weight: bold;" +
+                    "-fx-text-alignment: center;" +
+                    "-fx-font-size: large;" +
+                    "-fx-padding: 8px 0"
+            );
 
             this.btnList.add(b);
             menu.getChildren().add(b);
@@ -66,6 +75,12 @@ public class MenuView extends HBox
             }
         }
         win = new Text(GameModel.WIN);
+        win.setFill(Color.RED);
+        win.setStyle("-fx-font-size: large;" +
+                "-fx-font-weight: bold;" +
+                "-fx-translate-x: -17em;" +
+                "-fx-translate-y: -15em"
+        );
         win.setVisible(false);
         menu.getChildren().add(win);
 
@@ -80,7 +95,6 @@ public class MenuView extends HBox
 
         clicksField.setText(String.valueOf(this.model.getNbClicksGridPlay()));
         this.win.setVisible(this.model.getWinState());
-        //this.errNumberText.setVisible(!this.model.getLightsFieldInt());
         this.btnList.get(1).setText(this.model.textTwoSidedBtn());
 
         for (int i = 0 ; i < this.btnList.size() ; i ++)
