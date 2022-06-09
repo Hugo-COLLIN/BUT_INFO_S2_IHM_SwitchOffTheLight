@@ -36,9 +36,11 @@ public class MenuView extends HBox
     {
         this.setPadding(new Insets(10));
         this.setWidth(100);
+        //this.setAlignment(Pos.CENTER);
 
         VBox menu = new VBox(5);
         menu.setAlignment(Pos.CENTER);
+        menu.setPrefHeight(this.getHeight());
 
         //Side action buttons
         for (String action : GameModel.BTN_LIST)
@@ -47,7 +49,7 @@ public class MenuView extends HBox
             b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action));
 
             //int n = b.getText().getC
-            b.setPrefWidth(85);
+            b.setPrefWidth(80);
             //b.setPrefHeight(this.getHeight() / 4);
             b.setStyle(
                     "-fx-background-color: orange;" +
@@ -55,7 +57,7 @@ public class MenuView extends HBox
                     "-fx-border-radius: 5px;" +
                     "-fx-font-weight: bold;" +
                     "-fx-text-alignment: center;" +
-                    "-fx-font-size: large;" +
+                    "-fx-font-size: 1.1em;" +
                     "-fx-padding: 8px 0"
             );
 
@@ -68,12 +70,19 @@ public class MenuView extends HBox
                 hb.setAlignment(Pos.CENTER);
 
                 Text clicksText = new Text(GameModel.CLICKS);
+                clicksText.setStyle(
+                        "-fx-font-weight: bold;" +
+                        "-fx-font-size: 1.1em"
+                );
+
                 clicksField = new Text();
+                clicksField.setStyle(clicksText.getStyle());
 
                 hb.getChildren().addAll(clicksField, clicksText);
                 menu.getChildren().add(hb);
             }
         }
+        /*
         win = new Text(GameModel.WIN);
         win.setFill(Color.RED);
         win.setStyle("-fx-font-size: large;" +
@@ -83,6 +92,8 @@ public class MenuView extends HBox
         );
         win.setVisible(false);
         menu.getChildren().add(win);
+
+         */
 
         this.getChildren().add(menu);
         this.update();

@@ -7,7 +7,7 @@ public class MainView extends BorderPane
 {
     //Attributes
     GameModel model;
-    GridView gridView;
+    BoardView boardView;
     MenuView menuView;
 
     //Constructor
@@ -15,8 +15,8 @@ public class MainView extends BorderPane
     {
         this.model = m;
 
-        this.gridView = new GridView(m, this);
-        this.setCenter(this.gridView);
+        this.boardView = new BoardView(m, this);
+        this.setCenter(this.boardView);
 
         this.menuView = new MenuView(m, this);
         this.setRight(menuView);
@@ -25,11 +25,11 @@ public class MainView extends BorderPane
     //Methods
     public void update()
     {
-        this.gridView.update();
+        this.boardView.update();
         this.menuView.update();
     }
 
-    public GridView getGridView() {
-        return this.gridView;
+    public BoardView getGridView() {
+        return this.boardView;
     }
 }

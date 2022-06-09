@@ -5,13 +5,12 @@ import example.switchOffTheLight.model.GameModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class GridView extends StackPane
+public class BoardView extends StackPane
 {
     public static final int TAILLE_CASE = 75;
 
@@ -24,14 +23,12 @@ public class GridView extends StackPane
     StackPane winPane;
     //StackPane container;
 
-    public GridView(GameModel m, MainView v)
+    public BoardView(GameModel m, MainView v)
     {
         //int count = GridModel.LENGTH_X;
         this.model = m;
         this.mainView = v;
         this.rectList = new Rectangle[GameModel.LENGTH_X][GameModel.LENGTH_Y];
-
-
 
         this.setPadding(new Insets(5));
         this.setAlignment(Pos.CENTER);
@@ -64,14 +61,17 @@ public class GridView extends StackPane
     {
         winPane = new StackPane();
 
-        Rectangle back = new Rectangle(100, 100);
-        back.setFill(Color.WHITE);
-        back.setStroke(Color.BLACK);
-        back.setWidth(100);
-        back.setHeight(100);
-        back.setStyle("-fx-border-radius: 5px;");
+        Rectangle back = new Rectangle(240, 140);
+        back.setFill(Color.ORANGE);
+        back.setStroke(Color.DARKORANGE);
+        back.setStrokeWidth(5);
+        back.setStyle("-fx-border-radius: 20px;");
 
         Text winText = new Text(GameModel.WIN);
+        winText.setLineSpacing(10.0);
+        winText.setStyle("-fx-font-size: xx-large;" +
+                "-fx-text-alignment: center;"
+        );
 
         winPane.setVisible(false);
         winPane.getChildren().addAll(back, winText);

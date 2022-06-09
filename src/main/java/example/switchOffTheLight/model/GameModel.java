@@ -10,7 +10,7 @@ public class GameModel
 
     public static final int
             LENGTH_X = 4,
-            LENGTH_Y = 3;
+            LENGTH_Y = 4;
 
     public static final String
             PLAY = "▶\nJouer", //▶
@@ -20,7 +20,7 @@ public class GameModel
             RAND = "\uD83D\uDD01\nAléatoire", //🔁 🎲
             END = "❌\nQuitter", //❌
             EXIT = "\uD83D\uDEA8\nPartir", //🌙💤💫
-            WIN = "🏁 Gagné !",
+            WIN = "\uD83C\uDFC6\nTu as gagné !\n\uD83C\uDFC6",
             CLICKS = " clics !";
 
     public static final String [] BTN_LIST = {PLAY, CONF, END, EXIT};
