@@ -6,12 +6,21 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Class that launch the application
+ */
 public class Main extends Application {
 
+    /**
+     * Main
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Build the scene using a model and a view
+     */
     @Override
     public void start(Stage stage) {
         GameModel model = new GameModel();
