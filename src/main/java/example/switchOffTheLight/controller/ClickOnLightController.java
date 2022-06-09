@@ -5,27 +5,35 @@ import example.switchOffTheLight.view.MainView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class ClickOnLightController implements EventHandler<MouseEvent> {
-
-    /*
-        Le controller est celui qui modifie les valeurs dans le
-        modele et mets a jour la vue afin de voir le changement
-
-        Le controller implements toujours EventHandler<>
-        le type peut rester inconnu mais il est conseille
-        de mettre le type qu'on recupere dans mon cas
-        c'est un MouseEvent
+/**
+ * Contoller actionned when a light (=rectangle) is clicked on the grid
+ * @author Hugo COLLIN, 09/06/2022
+ */
+public class ClickOnLightController implements EventHandler<MouseEvent>
+{
+    //Attributes
+    /**
+     * Model used by the controller
      */
-
-
     GameModel model;
+
+    /**
+     * View used by the controller
+     */
     MainView mainView;
 
+    /**
+     * Coordinates of the rectangle position corresponding to player's click
+     */
     int btnX, btnY;
 
-    /*
-        Prend souvent en parametre modele et vue car pas
-        souvent cree en interne
+    //Constructor
+    /**
+     * Constructor that takes a model, a view and 2 coordinates x and y
+     * @param model model that will be modified by the controller
+     * @param mainView view which the action come from
+     * @param x rectangle's width position corresponding to player's click
+     * @param y rectangle's height position corresponding to player's click
      */
     public ClickOnLightController(GameModel model, MainView mainView, int x, int y) {
         this.model = model;
@@ -34,17 +42,14 @@ public class ClickOnLightController implements EventHandler<MouseEvent> {
         this.btnY = y;
     }
 
-    /*
-        Methode obligatoire a cause de l'implementation
+    //Methdod
+    /**
+     * Update the model with its corresponding method, then update the view based on the model
+     * @param mouseEvent mouse event
      */
     @Override
     public void handle(MouseEvent mouseEvent) {
         this.model.clickOnLight(this.btnX, this.btnY);
         this.mainView.update();
-        /*
-        model.deplacer(); // Deplace le cercle non graphique
-        model.agrandir(); // Agrandit le cercle
-        vue.update(); // Mets a jour la vue par consequent deplace et agrandit le cercle graphique
-                 */
     }
 }
