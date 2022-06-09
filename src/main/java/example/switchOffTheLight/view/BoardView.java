@@ -10,6 +10,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+/**
+ * Sub-view containing the grid and the winning screen
+ * @author Hugo COLLIN, 09/06/2022
+ */
 public class BoardView extends StackPane
 {
     //Attributes
@@ -42,15 +46,15 @@ public class BoardView extends StackPane
     //Constructor
 
     /**
-     * Constructor that uses a model and a main view to build the BoardView sub-view
-     * @param m model used to build and update this view
-     * @param v main view used to build and update this view
+     * Constructor that uses a model and a main view to build a BoardView sub-view
+     * @param model model used to build and update this view
+     * @param mainView main view used to build and update this view
      */
-    public BoardView(GameModel m, MainView v)
+    public BoardView(GameModel model, MainView mainView)
     {
         //int count = GridModel.LENGTH_X;
-        this.model = m;
-        this.mainView = v;
+        this.model = model;
+        this.mainView = mainView;
         this.rectList = new Rectangle[GameModel.LENGTH_X][GameModel.LENGTH_Y];
 
         this.setPadding(new Insets(5));
@@ -154,6 +158,7 @@ public class BoardView extends StackPane
     }
 
     /**
+     * Called each time the player executes an action on the interface
      * Show the winning screen if the player wins
      * Then, set the color of each rectangle according to his corresponding state in the model
      */

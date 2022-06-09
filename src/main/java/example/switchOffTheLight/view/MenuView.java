@@ -11,16 +11,40 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 
+/**
+ * Sub-view containing the the buttons and the texts
+ * @author Hugo COLLIN, 09/06/2022
+ */
 public class MenuView extends HBox
 {
+    //Attributes
+    /**
+     * Model used by the view
+     */
     GameModel model;
 
+    /**
+     * Parent view of this
+     */
     MainView mainView;
 
+    /**
+     * List containing all the buttons on the interface
+     */
     ArrayList<Button> btnList;
 
+    /**
+     * Clicks' counter's corresponding texts
+     */
     Text clicksText, clicksCounter;
 
+
+    //Constructor
+    /**
+     * Constructor that uses a model and a main view to build a MenuView sub-view
+     * @param model model used to build and update this view
+     * @param mainView main view used to build and update this view
+     */
     public MenuView (GameModel model, MainView mainView)
     {
         this.model = model;
@@ -29,6 +53,12 @@ public class MenuView extends HBox
         this.makeMenu();
     }
 
+
+    //Methods
+    /**
+     * Method that makes a menu with a click counter and the buttons
+     * corresponding to the BTN_LIST list.
+     */
     public void makeMenu()
     {
         this.setPadding(new Insets(10));
@@ -61,9 +91,7 @@ public class MenuView extends HBox
             Button b = new Button(action);
             b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action));
 
-            //int n = b.getText().getC
             b.setPrefWidth(80);
-            //b.setPrefHeight(this.getHeight() / 4);
             b.setStyle(
                     "-fx-background-color: orange;" +
                     "-fx-border-color: darkorange;" +
@@ -76,40 +104,23 @@ public class MenuView extends HBox
 
             this.btnList.add(b);
             menu.getChildren().add(b);
-
-            /*
-            if (action.equals(GameModel.PLAY))
-            {
-                HBox hb = new HBox();
-                hb.setAlignment(Pos.CENTER);
-
-                Text clicksText = new Text(GameModel.CLICKS);
-                clicksText.setStyle(
-                        "-fx-font-weight: bold;" +
-                        "-fx-font-size: 1.1em"
-                );
-
-                clicksField = new Text();
-                clicksField.setStyle(clicksText.getStyle());
-
-                hb.getChildren().addAll(clicksField, clicksText);
-                menu.getChildren().add(hb);
-            }*/
         }
 
         this.getChildren().add(menu);
         this.update();
     }
 
+    /**
+     * Called each time the player executes an action on the interface
+     * Update buttons state and execute the action corresponding to the model's mode
+     */
     public void update()
     {
         if (this.model.getMode().equals(GameModel.EXIT))
             System.exit(0);
 
-        clicksCounter.setText(String.valueOf(this.model.getNbClicksGridPlay()));
-        this.btnList.get(1).setText(this.model.textTwoSidedBtn());
-
         //Counter view state
+        clicksCounter.setText(String.valueOf(this.model.getNbClicksGridPlay()));
         if (this.model.getWinState() || this.model.getMode().equals(GameModel.PLAY))
         {
             this.clicksText.setVisible(true);
@@ -120,7 +131,7 @@ public class MenuView extends HBox
             this.clicksText.setVisible(false);
             this.clicksCounter.setVisible(false);
         }
-
+        this.btnList.get(1).setText(this.model.textTwoSidedBtn());
 
 
         for (int i = 0 ; i < this.btnList.size() ; i ++)
