@@ -19,7 +19,9 @@ public class GameModel
             CONF = "🔧 Configurer",
             RAND = "\uD83D\uDD01 Aléatoire", //🔁 🎲
             END = "❌ Abandonner", //❌
-            EXIT = "\uD83D\uDEA8 Sortir"; //🌙💤💫
+            EXIT = "\uD83D\uDEA8 Sortir", //🌙💤💫
+            WIN = "🏁 Vous avez gagné !",
+            CLICKS = " clics !";
 
     public static final String [] ACTION_LIST = {PLAY, CONF, END, EXIT};
 

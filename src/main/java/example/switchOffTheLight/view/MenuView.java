@@ -36,8 +36,6 @@ public class MenuView extends HBox
         this.setWidth(100);
 
         //TextField for button controller
-
-        //TextField for button controller
         TextField lightsField = new TextField();
         lightsField.setPrefWidth(this.getWidth() / 2);
 
@@ -60,28 +58,14 @@ public class MenuView extends HBox
                 HBox hb = new HBox();
                 hb.setAlignment(Pos.CENTER);
 
-                Text clicksText = new Text(" clics !");
+                Text clicksText = new Text(GameModel.CLICKS);
                 clicksField = new Text();
 
                 hb.getChildren().addAll(clicksField, clicksText);
                 menu.getChildren().add(hb);
             }
-            /*
-            if (action.equals(GameModel.CONF))
-            {
-                HBox hb = new HBox(5);
-                Text lightsText = new Text("Cases : ");
-
-                hb.getChildren().addAll(lightsText, lightsField);
-                menu.getChildren().add(hb);
-
-                errNumberText = new Text("Nombre saisi incorrect.");
-                errNumberText.setVisible(false);
-                menu.getChildren().add(errNumberText);
-            }
-                         */
         }
-        win = new Text("🏁 Vous avez gagné !");
+        win = new Text(GameModel.WIN);
         win.setVisible(false);
         menu.getChildren().add(win);
 
