@@ -5,11 +5,8 @@ import example.switchOffTheLight.model.GameModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -22,7 +19,7 @@ public class MenuView extends HBox
 
     ArrayList<Button> btnList;
 
-    Text win, clicksField;
+    Text clicksText, clicksCounter;
 
     public MenuView (GameModel model, MainView mainView)
     {
@@ -39,10 +36,26 @@ public class MenuView extends HBox
         //this.setAlignment(Pos.CENTER);
 
         VBox menu = new VBox(5);
-        menu.setAlignment(Pos.CENTER);
+        menu.setAlignment(Pos.TOP_CENTER);
         menu.setPrefHeight(this.getHeight());
 
-        //Side action buttons
+        // >Show the click counter
+        HBox hb = new HBox();
+        hb.setAlignment(Pos.CENTER);
+
+        clicksText = new Text(GameModel.CLICKS);
+        clicksText.setStyle(
+                "-fx-font-weight: bold;" +
+                        "-fx-font-size: 1.1em"
+        );
+
+        clicksCounter = new Text();
+        clicksCounter.setStyle(clicksText.getStyle());
+
+        hb.getChildren().addAll(clicksCounter, clicksText);
+        menu.getChildren().add(hb);
+
+        // >Make side action buttons
         for (String action : GameModel.BTN_LIST)
         {
             Button b = new Button(action);
@@ -64,6 +77,7 @@ public class MenuView extends HBox
             this.btnList.add(b);
             menu.getChildren().add(b);
 
+            /*
             if (action.equals(GameModel.PLAY))
             {
                 HBox hb = new HBox();
@@ -80,20 +94,8 @@ public class MenuView extends HBox
 
                 hb.getChildren().addAll(clicksField, clicksText);
                 menu.getChildren().add(hb);
-            }
+            }*/
         }
-        /*
-        win = new Text(GameModel.WIN);
-        win.setFill(Color.RED);
-        win.setStyle("-fx-font-size: large;" +
-                "-fx-font-weight: bold;" +
-                "-fx-translate-x: -17em;" +
-                "-fx-translate-y: -15em"
-        );
-        win.setVisible(false);
-        menu.getChildren().add(win);
-
-         */
 
         this.getChildren().add(menu);
         this.update();
@@ -104,9 +106,22 @@ public class MenuView extends HBox
         if (this.model.getMode().equals(GameModel.EXIT))
             System.exit(0);
 
-        clicksField.setText(String.valueOf(this.model.getNbClicksGridPlay()));
-        //this.win.setVisible(this.model.getWinState());
+        clicksCounter.setText(String.valueOf(this.model.getNbClicksGridPlay()));
         this.btnList.get(1).setText(this.model.textTwoSidedBtn());
+
+        //Counter view state
+        if (this.model.getWinState() || this.model.getMode().equals(GameModel.PLAY))
+        {
+            this.clicksText.setVisible(true);
+            this.clicksCounter.setVisible(true);
+        }
+        else
+        {
+            this.clicksText.setVisible(false);
+            this.clicksCounter.setVisible(false);
+        }
+
+
 
         for (int i = 0 ; i < this.btnList.size() ; i ++)
             this.btnList.get(i).setDisable(!this.model.getBtnState(i));
