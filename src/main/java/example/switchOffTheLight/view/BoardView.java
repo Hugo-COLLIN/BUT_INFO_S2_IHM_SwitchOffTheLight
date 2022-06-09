@@ -12,17 +12,40 @@ import javafx.scene.text.Text;
 
 public class BoardView extends StackPane
 {
-    public static final int TAILLE_CASE = 75;
+    //Attributes
+    /**
+     * Size for lights represented by Rectangle
+     */
+    public static final int BLOCK_SIZE = 75;
 
+    /**
+     * Model used by the view
+     */
     GameModel model;
 
+    /**
+     * Parent view of this
+     */
     MainView mainView;
 
+    /**
+     * List of rectangles corresponding to the grid representation
+     */
     Rectangle[][] rectList;
 
+    /**
+     * Pane shown when the player win
+     */
     StackPane winPane;
-    //StackPane container;
 
+
+    //Constructor
+
+    /**
+     * Constructor that uses a model and a main view to build the BoardView sub-view
+     * @param m model used to build and update this view
+     * @param v main view used to build and update this view
+     */
     public BoardView(GameModel m, MainView v)
     {
         //int count = GridModel.LENGTH_X;
@@ -37,12 +60,18 @@ public class BoardView extends StackPane
 
     }
 
+    /**
+     * Call methods to build the game panel : first the grid, then the ending screen
+     */
     public void makeGamePanel ()
     {
         this.makeGridLigths();
         this.makeWinScreen();
     }
 
+    /**
+     * Create a grid composed of rectangles which represents the model's lights
+     */
     public void makeGridLigths ()
     {
         GridPane grid = new GridPane();
@@ -57,6 +86,9 @@ public class BoardView extends StackPane
         this.getChildren().add(grid);
     }
 
+    /**
+     * Create a winning screen with a rectangle and a Text in a StackPane
+     */
     public void makeWinScreen ()
     {
         winPane = new StackPane();
@@ -76,46 +108,19 @@ public class BoardView extends StackPane
         winPane.setVisible(false);
         winPane.getChildren().addAll(back, winText);
 
-
-
-
-
-
-
-
-
-
-
-        /*
-        winPane.setStyle("-fx-background-color: white");
-        winPane.setStyle(
-                "-fx-translate-x: 10em;" +
-                        "-fx-translate-y: 10em;"
-        );
-
-        winPane.setMaxSize(0, 0);
-        winPane.setVisible(false);
-
-
-
-
-
-
-        Text win = new Text(GameModel.WIN);
-        win.setFill(Color.RED);
-        win.setStyle("-fx-font-size: large;" +
-                "-fx-font-weight: bold;"
-        );
-        winPane.getChildren().addAll(back, win);
-    */
-
         this.getChildren().add(winPane);
     }
 
+    /**
+     * Method that enable to create a rectangle for the grid of lights
+     * @param x width position in the grid
+     * @param y height position in the grid
+     * @return a rectangle (object of type Rectangle)
+     */
     public Rectangle makeRect (int x, int y)
     {
         Rectangle rect = updateRectFill(
-                new Rectangle(TAILLE_CASE, TAILLE_CASE),
+                new Rectangle(BLOCK_SIZE, BLOCK_SIZE),
                 this.model.getLight(x,y)
         );
         rect.setArcHeight(15);
@@ -131,6 +136,13 @@ public class BoardView extends StackPane
 
     }
 
+    /**
+     * Set the background color of the rectangle according the state
+     * of the corresponding light in the model
+     * @param rectP rectangle from the view
+     * @param lightModel light representation from the model
+     * @return a rectangle good-colored according his light state in the model
+     */
     public Rectangle updateRectFill (Rectangle rectP, boolean lightModel)
     {
         if (lightModel)
@@ -141,28 +153,16 @@ public class BoardView extends StackPane
         return rectP;
     }
 
+    /**
+     * Show the winning screen if the player wins
+     * Then, set the color of each rectangle according to his corresponding state in the model
+     */
     public void update ()
     {
         this.winPane.setVisible(this.model.getWinState());
-        /*
-        if (this.model.getWinState())
-        {
-            this.winPane.setVisible(this.model.getWinState());
-            //this.winPane.getChildren().get(0).set
-        }
-        else
-        {
-            this.winPane.setVisible(this.model.getWinState());
-            this.winPane.setMaxSize(0, 0);
-        }
-
-         */
 
         for (int i = 0; i < GameModel.LENGTH_X ; i ++)
             for (int j = 0; j < GameModel.LENGTH_Y ; j ++)
-            {
                 this.updateRectFill(this.rectList[i][j], this.model.getLight(i, j));
-            }
-
     }
 }

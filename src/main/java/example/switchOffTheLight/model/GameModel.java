@@ -2,6 +2,7 @@ package example.switchOffTheLight.model;
 
 /**
  * Class that contains all the data concerning the game
+ * @author Hugo COLLIN, 09/06/2022
  */
 public class GameModel
 {
