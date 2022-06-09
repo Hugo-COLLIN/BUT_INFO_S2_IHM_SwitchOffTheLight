@@ -6,11 +6,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class GridView extends GridPane
+public class GridView extends StackPane
 {
     public static final int TAILLE_CASE = 75;
 
@@ -20,7 +21,8 @@ public class GridView extends GridPane
 
     Rectangle[][] rectList;
 
-    Pane winPane;
+    StackPane winPane;
+    //StackPane container;
 
     public GridView(GameModel m, MainView v)
     {
@@ -29,45 +31,88 @@ public class GridView extends GridPane
         this.mainView = v;
         this.rectList = new Rectangle[GameModel.LENGTH_X][GameModel.LENGTH_Y];
 
-        //for (int i = 0 ; i < count ; i ++)
-        //    this.rectList.add(new ArrayList<>());
 
-        this.setHgap(5);
-        this.setVgap(5);
+
         this.setPadding(new Insets(5));
         this.setAlignment(Pos.CENTER);
 
+        this.makeGamePanel();
+
+    }
+
+    public void makeGamePanel ()
+    {
         this.makeGridLigths();
         this.makeWinScreen();
     }
 
     public void makeGridLigths ()
     {
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(5);
+        grid.setVgap(5);
+
         for (int i = 0; i < GameModel.LENGTH_X; i ++)
             for (int j = 0; j < GameModel.LENGTH_Y; j ++)
-                makeRect(i, j);
+                grid.add(makeRect(i, j), i, j);
+
+        this.getChildren().add(grid);
     }
 
     public void makeWinScreen ()
     {
-        winPane = new Pane();
+        winPane = new StackPane();
+
+        Rectangle back = new Rectangle(100, 100);
+        back.setFill(Color.WHITE);
+        back.setStroke(Color.BLACK);
+        back.setWidth(100);
+        back.setHeight(100);
+        back.setStyle("-fx-border-radius: 5px;");
+
+        Text winText = new Text(GameModel.WIN);
+
+        winPane.setVisible(false);
+        winPane.getChildren().addAll(back, winText);
+
+
+
+
+
+
+
+
+
+
+
+        /*
         winPane.setStyle("-fx-background-color: white");
+        winPane.setStyle(
+                "-fx-translate-x: 10em;" +
+                        "-fx-translate-y: 10em;"
+        );
 
         winPane.setMaxSize(0, 0);
         winPane.setVisible(false);
 
+
+
+
+
+
         Text win = new Text(GameModel.WIN);
         win.setFill(Color.RED);
         win.setStyle("-fx-font-size: large;" +
-                "-fx-font-weight: bold;" +
-                "-fx-translate-x: -17em;" +
-                "-fx-translate-y: -15em"
-        );        winPane.getChildren().add(win);
+                "-fx-font-weight: bold;"
+        );
+        winPane.getChildren().addAll(back, win);
+    */
 
-        this.add(winPane, 5, 5);
+        this.getChildren().add(winPane);
     }
 
-    public void makeRect (int x, int y)
+    public Rectangle makeRect (int x, int y)
     {
         Rectangle rect = updateRectFill(
                 new Rectangle(TAILLE_CASE, TAILLE_CASE),
@@ -82,7 +127,7 @@ public class GridView extends GridPane
                 new ClickOnLightController(this.model, this.mainView, x, y)
         );
 
-        this.add(rect, x, y);
+        return rect;
 
     }
 
@@ -98,16 +143,20 @@ public class GridView extends GridPane
 
     public void update ()
     {
+        this.winPane.setVisible(this.model.getWinState());
+        /*
         if (this.model.getWinState())
         {
             this.winPane.setVisible(this.model.getWinState());
-            this.winPane.setMaxSize(00, 00);
+            //this.winPane.getChildren().get(0).set
         }
         else
         {
             this.winPane.setVisible(this.model.getWinState());
             this.winPane.setMaxSize(0, 0);
         }
+
+         */
 
         for (int i = 0; i < GameModel.LENGTH_X ; i ++)
             for (int j = 0; j < GameModel.LENGTH_Y ; j ++)
