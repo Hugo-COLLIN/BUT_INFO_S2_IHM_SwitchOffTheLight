@@ -48,7 +48,7 @@ public class MenuView extends HBox
         for (String action : GameModel.ACTION_LIST)
         {
             Button b = new Button(action);
-            b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action, lightsField));
+            b.setOnAction(new ClickOnButtonController(this.model, this.mainView, action));
 
             b.setPrefWidth(this.getWidth());
 
@@ -94,7 +94,7 @@ public class MenuView extends HBox
         if (this.model.getMode().equals(GameModel.EXIT))
             System.exit(0);
 
-        clicksField.setText(String.valueOf(this.model.getNbClicks()));
+        clicksField.setText(String.valueOf(this.model.getNbClicksGridPlay()));
         this.win.setVisible(this.model.getWinState());
         //this.errNumberText.setVisible(!this.model.getLightsFieldInt());
         this.btnList.get(1).setText(this.model.textTwoSidedBtn());

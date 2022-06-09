@@ -19,6 +19,7 @@ public class Main extends Application {
         Scene scene = new Scene(vue);
 
         stage.setScene(scene);
+        stage.setTitle("Éteins la lumière - Hugo COLLIN");
         stage.show();
     }
 }

@@ -6,7 +6,7 @@ public class GameModel
     private boolean winState, randBtn;
     private String mode; //0 : playMode, 1 : editorMode, 2 : endMode, 3 : exitMode
     public boolean [] btnState;
-    private int nbClicks;
+    private int nbClicksGridPlay, nbClicksGridConf;
 
     public static final int
             LENGTH_X = 4,
@@ -38,7 +38,7 @@ public class GameModel
 
         this.mode = END;
         this.btnState = new boolean[]{true, true, false, true};
-        this.nbClicks = 0;
+        this.nbClicksGridPlay = 0;
 
         this.initialGrid();
     }
@@ -52,8 +52,8 @@ public class GameModel
         {
             invert(x,y);
 
-            if (!this.mode.equals(CONF))
-                nbClicks ++;
+            if (this.mode.equals(PLAY))
+                nbClicksGridPlay++;
 
             if (this.mode.equals(PLAY))
             {
@@ -159,7 +159,7 @@ public class GameModel
         this.mode = action;
 
         if (this.mode.equals(PLAY))
-            this.nbClicks = 0;
+            this.nbClicksGridPlay = 0;
 
         for (int i = 0 ; i < ACTION_LIST.length ; i ++)
             if (!((i == 1 || i == 2) && this.mode.equals(CONF)))
@@ -208,12 +208,12 @@ public class GameModel
         return btnState[index];
     }
 
-    public int getNbClicks() {
-        return nbClicks;
+    public int getNbClicksGridPlay() {
+        return nbClicksGridPlay;
     }
 
-    public void setNbClicks(int nbClicks) {
-        this.nbClicks = nbClicks;
+    public void setNbClicksGridPlay(int nbClicksGridPlay) {
+        this.nbClicksGridPlay = nbClicksGridPlay;
     }
 
     public boolean getRandBtn() {

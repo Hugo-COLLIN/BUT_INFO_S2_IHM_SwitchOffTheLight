@@ -22,23 +22,11 @@ public class ClickOnButtonController implements EventHandler<ActionEvent> {
     GameModel model;
     MainView view;
     String action;
-    int nbCases;
 
-
-    public ClickOnButtonController(GameModel model, MainView view, String action, TextField lightF) {
+    public ClickOnButtonController(GameModel model, MainView view, String action) {
         this.model = model;
         this.view = view;
         this.action = action;
-
-        try {
-            //this.model.setLightsFieldInt(true);
-            this.nbCases = Integer.parseInt(lightF.getText());
-        }
-        catch (NumberFormatException e)
-        {
-            //this.model.setLightsFieldInt(false);
-            this.nbCases = -1;
-        }
     }
 
     @Override
