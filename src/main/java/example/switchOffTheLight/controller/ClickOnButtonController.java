@@ -43,7 +43,7 @@ public class ClickOnButtonController implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent mouseEvent) {
-        this.model.changeButtonStatus(this.action);
+        this.model.btnTriggered(this.action);
         this.view.update();
     }
 }

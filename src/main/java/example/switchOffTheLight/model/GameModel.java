@@ -15,10 +15,10 @@ public class GameModel
     public static final String
             PLAY = "▶ Jouer",
             PAUSE = "⏸ Pause", //🎲🔮⚰🔌🀄🃏🧩🧸🧿🏆🥇🚨🏁🏴‍☠️🧭🌌🪐
-            RESTART = " Rejouer", //🔁
+            RESTART = " Rejouer", //
             CONF = "🔧 Configurer",
-            RAND = "\uD83D\uDD01 Aléatoire", //🎲
-            END = "❌ Abandonner",
+            RAND = "\uD83D\uDD01 Aléatoire", //🔁 🎲
+            END = "❌ Abandonner", //❌
             EXIT = "\uD83D\uDEA8 Sortir"; //🌙💤💫
 
     public static final String [] ACTION_LIST = {PLAY, CONF, END, EXIT};
@@ -36,7 +36,7 @@ public class GameModel
         this.winState = false;
         this.randBtn = false;
 
-        this.mode = "Arrêter";
+        this.mode = END;
         this.btnState = new boolean[]{true, true, false, true};
         this.nbClicks = 0;
 
@@ -68,46 +68,43 @@ public class GameModel
         }
     }
 
-    public void changeButtonStatus(String action)
+    public void btnTriggered(String action)
     {
-        /*
-        if (action.equals(CONF))
-            if (!this.mode.equals(CONF))
-                this.randBtn = true;
-            else
-                this.aleaLights();
-        else if (this.mode.equals(CONF))
-            this.randBtn = false;
-        */
-
-        if (!this.mode.equals(CONF) && action.equals(CONF))
-            this.randBtn = true;
-        else if (this.mode.equals(CONF) && action.equals(CONF))
-            this.aleaLights();
-        else if (this.mode.equals(CONF))
-            this.randBtn = false;
+        this.upBtnState(action);
 
         if (this.winState) this.winState = false;
-
-
-
-        this.mode = action;
-
-        if (this.mode.equals(PLAY))
-            this.nbClicks = 0;
-
-        for (int i = 0 ; i < ACTION_LIST.length ; i ++)
-            if (!((i == 1 || i == 2) && this.mode.equals(CONF)))
-                this.btnState[i] = !this.mode.equals(ACTION_LIST[i]);
-            else
-                this.btnState[i] = this.mode.equals(ACTION_LIST[i]);
-
         if (isClearGame())
             this.initialGrid();
     }
 
+    // >Meca jeu
+    public boolean isClearGame ()
+    {
+        return (!this.winState && this.mode.equals(GameModel.END))
+                || (this.winState && this.mode.equals(GameModel.PLAY));
+    }
 
-    // >Grid methods
+
+    //   ->Winning
+    public boolean isWin ()
+    {
+        if (!this.mode.equals(PLAY)) return false;
+
+        for (int i = 0 ; i < LENGTH_X ; i ++)
+            for (int j = 0; j < LENGTH_Y; j++)
+                if (this.lights[i][j]) return false;
+
+        return true;
+    }
+
+    public void winAction ()
+    {
+        this.mode = END;
+        this.winState = true;
+        this.upBtnState(this.mode);
+    }
+
+    // >Board methods
     public void initialGrid ()
     {
         this.winState = false;
@@ -122,19 +119,6 @@ public class GameModel
             this.lights[x][y] = !this.lights[x][y];
     }
 
-    public void aleaLights (int n)
-    {
-        int xAlea, yAlea;
-        for (int i = 0 ; i < n ; i ++)
-        {
-            do {
-                xAlea = (int) Math.round(Math.random() * LENGTH_X);
-                yAlea = (int) Math.round(Math.random() * LENGTH_Y);
-            }
-            while (this.lights[xAlea][yAlea]);
-            this.invert(xAlea, yAlea);
-        }
-    }
     public void aleaLights ()
     {
         int xAlea, yAlea;
@@ -161,39 +145,34 @@ public class GameModel
         return x >= 0 && x < LENGTH_X && y >= 0 && y < LENGTH_Y;
     }
 
+
     // >Buttons
+    public void upBtnState(String action)
+    {
+        if (!this.mode.equals(CONF) && action.equals(CONF))
+            this.randBtn = true;
+        else if (this.mode.equals(CONF) && action.equals(CONF))
+            this.aleaLights();
+        else if (this.mode.equals(CONF))
+            this.randBtn = false;
+
+        this.mode = action;
+
+        if (this.mode.equals(PLAY))
+            this.nbClicks = 0;
+
+        for (int i = 0 ; i < ACTION_LIST.length ; i ++)
+            if (!((i == 1 || i == 2) && this.mode.equals(CONF)))
+                this.btnState[i] = !this.mode.equals(ACTION_LIST[i]);
+            else
+                this.btnState[i] = this.mode.equals(ACTION_LIST[i]);
+    }
+
     public String textTwoSidedBtn()
     {
         if (randBtn)
             return RAND;
         return CONF;
-    }
-
-    // >Meca jeu
-    public boolean isClearGame ()
-    {
-        return (!this.winState && this.mode.equals(GameModel.END))
-                || (this.winState && this.mode.equals(GameModel.PLAY));
-    }
-
-
-    // >Winning
-    public boolean isWin ()
-    {
-        if (!this.mode.equals(PLAY)) return false;
-
-        for (int i = 0 ; i < LENGTH_X ; i ++)
-            for (int j = 0; j < LENGTH_Y; j++)
-                if (this.lights[i][j]) return false;
-
-        return true;
-    }
-
-    public void winAction ()
-    {
-        this.mode = END;
-        this.winState = true;
-        this.changeButtonStatus(this.mode);
     }
 
     // >Getters
